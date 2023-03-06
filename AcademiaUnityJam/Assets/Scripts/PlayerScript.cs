@@ -9,6 +9,7 @@ public class PlayerScript : MonoBehaviour
 
     float playerDirection;
     Vector2 scale;
+    bool human = true;
 
     #region Run Variables
     [Header ("Run Stats")]
@@ -43,12 +44,20 @@ public class PlayerScript : MonoBehaviour
         playerInputs = new Controls();
         playerInputs.Player.Enable();
         playerInputs.Player.Jump.performed += Jump;
+        //playerInputs.Lobo.Jump.performed += Jump;
+        playerInputs.Player.Morph.started += Morph;
+        //playerInputs.Lobo.Morph.started += Morph;
+        playerInputs.Player.Attack1.started += Attack1;
+        playerInputs.Player.Attack2.started += Attack2;
+
         playerRbd = GetComponent<Rigidbody2D>();
+
 
     }
 
     
 
+    
     void Start()
     {
         initialAcceleration = acceleration;
@@ -57,7 +66,17 @@ public class PlayerScript : MonoBehaviour
     #region Updates
     private void FixedUpdate()
     {
+
         playerDirection = playerInputs.Player.Movement.ReadValue<float>();
+
+        /*if (human)
+        {
+            playerDirection = playerInputs.Player.Movement.ReadValue<float>();        
+        }
+        else
+        {
+            playerDirection = playerInputs.Lobo.Movement.ReadValue<float>();          
+        }*/
 
         Run();
         
@@ -74,6 +93,33 @@ public class PlayerScript : MonoBehaviour
             lastOnGroundTime -= Time.deltaTime;
         }
     }
+    #endregion
+
+    #region Attacks
+    private void Attack2(InputAction.CallbackContext obj)
+    {
+        if (human)
+        {
+            print("ataque 2 humano");
+        }
+        else
+        {
+            print("ataque 2 lobo");
+        }
+    }
+
+    private void Attack1(InputAction.CallbackContext obj)
+    {
+        if (human)
+        {
+            print("ataque 1 humano");
+        }
+        else
+        {
+            print("ataque 1 lobo");
+        }
+    }
+
     #endregion
 
     #region Movement
@@ -108,6 +154,7 @@ public class PlayerScript : MonoBehaviour
         return Physics2D.OverlapCircle(groundCheckPoint.position, 0.2f, groundLayer);
     }
     #endregion
+
     #region Run
     /// <summary>
     /// Movimenta o personagem para os lados
@@ -115,9 +162,9 @@ public class PlayerScript : MonoBehaviour
     private void Run()
     {
         playerRbd.AddForce(new Vector2 (playerDirection, 0f) * acceleration, ForceMode2D.Force);
-        
+
         //Checa se o input está na mesma direção do personagem
-        if (Mathf.Sign(playerDirection) != Mathf.Sign(scale.x))
+        if (Mathf.Sign(playerDirection) != Mathf.Sign(scale.x) && playerDirection != 0f)
         {
             ChangeDirection();
         }
@@ -146,9 +193,38 @@ public class PlayerScript : MonoBehaviour
         playerRbd.velocity = new Vector2(actualVelocity, playerRbd.velocity.y);
     }
     #endregion
+
     #endregion
 
-    // Update is called once per frame
+    #region Trocas
+    private void Morph(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            //Troca de humano para lobo
+            if (human)
+            {
+                //playerInputs.Player.Disable();
+                //playerInputs.Lobo.Enable();
+                human= false;
+                maxSpeed += 3f;
+                jumpForce -= 3f;
+                print("Virou lobo");
+            }
+            //troca de lobo para humano
+            else
+            {
+                //playerInputs.Player.Enable();
+                //playerInputs.Lobo.Disable();
+                human= true;
+                maxSpeed -= 3f;
+                jumpForce += 3f;
+                print("Virou Humano");
+            }                   
+            
+        }
+    }
+    #endregion
     
 
 
