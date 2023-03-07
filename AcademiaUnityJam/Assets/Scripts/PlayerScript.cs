@@ -19,6 +19,19 @@ public class PlayerScript : MonoBehaviour
 
     #endregion
 
+    #region Attack Variables
+    [Header ("Attack Stats")]
+    
+    public float attackRange;
+
+    [SerializeField]
+    private Transform attackPoint1, attackPoint2, attackPoint3, attackPoint4;
+
+    
+    [SerializeField]
+    private LayerMask enemyLayer;
+    #endregion
+
     #region Jump Variables
     [Header("Jump Stats")]
     [SerializeField] Transform groundCheckPoint;
@@ -44,20 +57,18 @@ public class PlayerScript : MonoBehaviour
         playerInputs = new Controls();
         playerInputs.Player.Enable();
         playerInputs.Player.Jump.performed += Jump;
-        //playerInputs.Lobo.Jump.performed += Jump;
-        playerInputs.Player.Morph.started += Morph;
-        //playerInputs.Lobo.Morph.started += Morph;
+        playerInputs.Player.Morph.started += Morph;        
         playerInputs.Player.Attack1.started += Attack1;
         playerInputs.Player.Attack2.started += Attack2;
-
+        playerInputs.Player.Attack3.started += Attack3;
+        playerInputs.Player.Attack4.started += Attack4;
         playerRbd = GetComponent<Rigidbody2D>();
 
 
     }
 
-    
 
-    
+
     void Start()
     {
         initialAcceleration = acceleration;
@@ -95,23 +106,40 @@ public class PlayerScript : MonoBehaviour
     }
     #endregion
 
-    #region Attacks
+    #region Attacks    
+    private void Attack4(InputAction.CallbackContext obj)
+    {
+        if (human)
+        {
+            print("ataque 4");
+        }
+    }
+
+    private void Attack3(InputAction.CallbackContext obj)
+    {
+        if (human)
+        {
+            print("ataque 3");
+        }
+    }
     private void Attack2(InputAction.CallbackContext obj)
     {
         if (human)
         {
             print("ataque 2 humano");
         }
-        else
-        {
-            print("ataque 2 lobo");
-        }
     }
-
+    
     private void Attack1(InputAction.CallbackContext obj)
     {
         if (human)
         {
+            Collider2D[] enemiesHit = Physics2D.OverlapCircleAll(attackPoint1.position, attackRange, enemyLayer);
+
+            foreach(Collider2D enemy in enemiesHit)
+            {
+                print("acerto");
+            }
             print("ataque 1 humano");
         }
         else
@@ -234,6 +262,9 @@ public class PlayerScript : MonoBehaviour
     {
         Gizmos.color = Color.green;
         Gizmos.DrawSphere(groundCheckPoint.position, 0.2f);
+
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(attackPoint1.position, attackRange);
     }
     #endregion
 }

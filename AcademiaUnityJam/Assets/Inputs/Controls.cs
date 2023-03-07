@@ -64,6 +64,24 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Attack3"",
+                    ""type"": ""Button"",
+                    ""id"": ""45d6b221-91b4-4077-a209-5ab728fd423f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Attack4"",
+                    ""type"": ""Button"",
+                    ""id"": ""ca38d304-f845-4c9d-af77-91418ce3754b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Morph"",
                     ""type"": ""Button"",
                     ""id"": ""bea8fd21-48ab-42e7-aea2-9329acbfba67"",
@@ -121,7 +139,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""eeef8e65-4a0d-4205-95fe-c427fc460665"",
-                    ""path"": ""<Keyboard>/z"",
+                    ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -143,11 +161,33 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""efbff3bf-7cb0-4009-89fa-7c400a20164f"",
-                    ""path"": ""<Keyboard>/x"",
+                    ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Attack2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2edc5a92-9930-46de-b197-08de662ae815"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Attack3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""30e7b1b1-2d35-47b4-8791-f59644b3ee7a"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Attack4"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -283,6 +323,8 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Attack1 = m_Player.FindAction("Attack1", throwIfNotFound: true);
         m_Player_Attack2 = m_Player.FindAction("Attack2", throwIfNotFound: true);
+        m_Player_Attack3 = m_Player.FindAction("Attack3", throwIfNotFound: true);
+        m_Player_Attack4 = m_Player.FindAction("Attack4", throwIfNotFound: true);
         m_Player_Morph = m_Player.FindAction("Morph", throwIfNotFound: true);
         // Lobo
         m_Lobo = asset.FindActionMap("Lobo", throwIfNotFound: true);
@@ -353,6 +395,8 @@ public partial class @Controls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Attack1;
     private readonly InputAction m_Player_Attack2;
+    private readonly InputAction m_Player_Attack3;
+    private readonly InputAction m_Player_Attack4;
     private readonly InputAction m_Player_Morph;
     public struct PlayerActions
     {
@@ -362,6 +406,8 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Attack1 => m_Wrapper.m_Player_Attack1;
         public InputAction @Attack2 => m_Wrapper.m_Player_Attack2;
+        public InputAction @Attack3 => m_Wrapper.m_Player_Attack3;
+        public InputAction @Attack4 => m_Wrapper.m_Player_Attack4;
         public InputAction @Morph => m_Wrapper.m_Player_Morph;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
@@ -384,6 +430,12 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @Attack2.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttack2;
                 @Attack2.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttack2;
                 @Attack2.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttack2;
+                @Attack3.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttack3;
+                @Attack3.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttack3;
+                @Attack3.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttack3;
+                @Attack4.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttack4;
+                @Attack4.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttack4;
+                @Attack4.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttack4;
                 @Morph.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMorph;
                 @Morph.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMorph;
                 @Morph.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMorph;
@@ -403,6 +455,12 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @Attack2.started += instance.OnAttack2;
                 @Attack2.performed += instance.OnAttack2;
                 @Attack2.canceled += instance.OnAttack2;
+                @Attack3.started += instance.OnAttack3;
+                @Attack3.performed += instance.OnAttack3;
+                @Attack3.canceled += instance.OnAttack3;
+                @Attack4.started += instance.OnAttack4;
+                @Attack4.performed += instance.OnAttack4;
+                @Attack4.canceled += instance.OnAttack4;
                 @Morph.started += instance.OnMorph;
                 @Morph.performed += instance.OnMorph;
                 @Morph.canceled += instance.OnMorph;
@@ -473,6 +531,8 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnAttack1(InputAction.CallbackContext context);
         void OnAttack2(InputAction.CallbackContext context);
+        void OnAttack3(InputAction.CallbackContext context);
+        void OnAttack4(InputAction.CallbackContext context);
         void OnMorph(InputAction.CallbackContext context);
     }
     public interface ILoboActions
