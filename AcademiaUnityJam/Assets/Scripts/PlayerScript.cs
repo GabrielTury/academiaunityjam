@@ -6,6 +6,7 @@ using UnityEngine.InputSystem.Composites;
 
 public class PlayerScript : MonoBehaviour
 {
+    public PlayerManager playerManager;
 
     float playerDirection;
     Vector2 scale;
@@ -27,7 +28,14 @@ public class PlayerScript : MonoBehaviour
     [SerializeField]
     private Transform attackPoint1, attackPoint2, attackPoint3, attackPoint4;
 
-    
+    //[SerializeField]
+    private int damageColor1 = 0, damageColor2 = 1, damageColor3 = 2, damageColor4 = 3;
+
+    [SerializeField]
+    private float attack1Cooldown, attack2Cooldown, attack3Cooldown, attack4Cooldown;
+
+    private float lastAttack1 = 100, lastAttack2 = 100, lastAttack3 = 100, lastAttack4 = 100, lastAttackWolf = 10;
+
     [SerializeField]
     private LayerMask enemyLayer;
     #endregion
@@ -103,48 +111,82 @@ public class PlayerScript : MonoBehaviour
         {
             lastOnGroundTime -= Time.deltaTime;
         }
+
+        lastAttack1 += Time.deltaTime;
+        lastAttack2 += Time.deltaTime;
+        lastAttack3 += Time.deltaTime;
+        lastAttack4 += Time.deltaTime;
+        lastAttackWolf += Time.deltaTime;
     }
     #endregion
 
     #region Attacks    
     private void Attack4(InputAction.CallbackContext obj)
     {
-        if (human)
+        if (human && lastAttack4 > attack4Cooldown)
         {
+            DoDamage(attackPoint4, attackRange, damageColor4);
+
+            lastAttack4 = 0f;
+
             print("ataque 4");
         }
     }
 
     private void Attack3(InputAction.CallbackContext obj)
     {
-        if (human)
+        if (human && lastAttack3 > attack3Cooldown)
         {
+            DoDamage(attackPoint3, attackRange, damageColor3);
+
+            lastAttack3 = 0f;
+
             print("ataque 3");
         }
     }
     private void Attack2(InputAction.CallbackContext obj)
     {
-        if (human)
+        if (human && lastAttack2 > attack2Cooldown)
         {
+            DoDamage(attackPoint2, attackRange, damageColor2);
+
+            lastAttack2 = 0f;
+
             print("ataque 2 humano");
         }
     }
     
     private void Attack1(InputAction.CallbackContext obj)
     {
-        if (human)
+        print(lastAttack1);
+        if (human && lastAttack1 > attack1Cooldown)
         {
-            Collider2D[] enemiesHit = Physics2D.OverlapCircleAll(attackPoint1.position, attackRange, enemyLayer);
 
-            foreach(Collider2D enemy in enemiesHit)
-            {
-                print("acerto");
-            }
+            DoDamage(attackPoint1, attackRange, damageColor1);
+
+            lastAttack1 = 0f;
+
             print("ataque 1 humano");
         }
-        else
+        else if(!human/*colocar cooldown do lobo aqui*/)
         {
+
+            DoDamage(attackPoint1, attackRange, 4);
+
+            lastAttackWolf = 0f;
+
             print("ataque 1 lobo");
+        }
+    }
+
+
+    private void DoDamage(Transform attackPoint,float attackRange, int damageColor)
+    {
+        Collider2D[] enemiesHit = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
+
+        foreach (Collider2D enemy in enemiesHit)
+        {
+            enemy.GetComponent<BasicEnemy>().TakeDamage(damageColor);
         }
     }
 
@@ -230,28 +272,40 @@ public class PlayerScript : MonoBehaviour
         if (context.started)
         {
             //Troca de humano para lobo
-            if (human)
+            if (human && playerManager.slider.value == 1f)
             {
                 //playerInputs.Player.Disable();
                 //playerInputs.Lobo.Enable();
                 human= false;
                 maxSpeed += 3f;
                 jumpForce -= 3f;
+
+                playerManager.ResetWolfBar(10);
+
                 print("Virou lobo");
             }
             //troca de lobo para humano
-            else
-            {
-                //playerInputs.Player.Enable();
-                //playerInputs.Lobo.Disable();
-                human= true;
-                maxSpeed -= 3f;
-                jumpForce += 3f;
-                print("Virou Humano");
-            }                   
+            //else
+            //{
+            //    //playerInputs.Player.Enable();
+            //    //playerInputs.Lobo.Disable();
+            //    human= true;
+            //    maxSpeed -= 3f;
+            //    jumpForce += 3f;
+            //    print("Virou Humano");
+            //}                   
             
         }
     }
+
+    public void UnMorph()
+    {
+        human = true;
+        maxSpeed -= 3f;
+        jumpForce += 3f;
+        print("Virou Humano");
+    }
+
     #endregion
     
 
