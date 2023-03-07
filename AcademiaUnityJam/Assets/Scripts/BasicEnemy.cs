@@ -42,7 +42,7 @@ public class BasicEnemy : MonoBehaviour
                 break;
         }
 
-        if(manyAuras == 1)
+        if(manyAuras >= 1)
         {
             do 
             { 
@@ -54,11 +54,12 @@ public class BasicEnemy : MonoBehaviour
 
             auraShield3 = -1;
             
-        }else if(manyAuras == 2)
+        }
+        
+        if(manyAuras == 2)
         {
             do
             {
-
                 auraShield3 = Random.Range(0, 4);
 
             }
@@ -83,12 +84,18 @@ public class BasicEnemy : MonoBehaviour
 
     }
     #endregion
-    public void TakeDamage(int damageColor)
+    public void TakeDamageShield(int damageColor)
     {
         //Animação de tomar dano
-        
+
         //toma dano
-        if(auraShield1 == damageColor) 
+        if (auraShield1 == -1 && auraShield2 == -1 && auraShield3 == -1)
+        {
+            TakeDamageHealth(40);
+        }
+
+
+        if (auraShield1 == damageColor) 
         {
 
             //Destrói a aura
@@ -111,10 +118,18 @@ public class BasicEnemy : MonoBehaviour
 
         }else if (damageColor == 4)
         {
-            Die();
+            TakeDamageHealth(40);
         }
 
-        if(auraShield1 == -1 && auraShield2 == -1 && auraShield3 == -1)
+        
+
+    }
+
+    private void TakeDamageHealth(int damage)
+    {
+
+        currentHealth -= damage;
+        if(currentHealth <= 0)
         {
             Die();
         }
@@ -127,6 +142,7 @@ public class BasicEnemy : MonoBehaviour
 
         //Destroi o objeto (usar pull se der tempo)
         playerManager.FillWolfBar();
+        //Trocar destroy por pull
         Destroy(gameObject);
     }
 

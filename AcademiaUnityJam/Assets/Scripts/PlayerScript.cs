@@ -186,7 +186,7 @@ public class PlayerScript : MonoBehaviour
 
         foreach (Collider2D enemy in enemiesHit)
         {
-            enemy.GetComponent<BasicEnemy>().TakeDamage(damageColor);
+            enemy.GetComponent<BasicEnemy>().TakeDamageShield(damageColor);
         }
     }
 
