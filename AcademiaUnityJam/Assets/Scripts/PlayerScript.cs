@@ -7,6 +7,7 @@ using UnityEngine.InputSystem.Composites;
 public class PlayerScript : MonoBehaviour
 {
     public PlayerManager playerManager;
+    public DialogueManager dialogueManager;
 
     float playerDirection;
     Vector2 scale;
@@ -24,6 +25,12 @@ public class PlayerScript : MonoBehaviour
     }
 
     public float maxSpeed;
+    private float maxSpeed0;
+
+    public float GetMaxSpeed0
+    {
+        get { return maxSpeed0; }
+    }
 
     #endregion
 
@@ -94,16 +101,21 @@ public class PlayerScript : MonoBehaviour
         playerInputs.Player.Attack2.started += Attack2;
         playerInputs.Player.Attack3.started += Attack3;
         playerInputs.Player.Attack4.started += Attack4;
+        playerInputs.Player.NextDialogue.started += NextDialogue_started;
         playerRbd = GetComponent<Rigidbody2D>();
 
 
     }
 
-
+    private void NextDialogue_started(InputAction.CallbackContext obj)
+    {
+        dialogueManager.DisplayNextSentence();
+    }
 
     void Start()
     {
         initialAcceleration = acceleration;
+        maxSpeed0 = maxSpeed;
     }
 
     #region Updates
