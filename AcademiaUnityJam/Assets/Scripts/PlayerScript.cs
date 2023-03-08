@@ -16,6 +16,13 @@ public class PlayerScript : MonoBehaviour
     [Header ("Run Stats")]
     public float acceleration;
     private float initialAcceleration;
+
+    public float GetinitialAcceleration
+    {
+        get { return initialAcceleration; }
+        set { initialAcceleration = value; }
+    }
+
     public float maxSpeed;
 
     #endregion
@@ -40,6 +47,13 @@ public class PlayerScript : MonoBehaviour
     private LayerMask enemyLayer;
     #endregion
 
+    #region Player Health
+    [SerializeField]
+    private int maxHealth;
+
+    private float currentHealth;
+    #endregion
+
     #region Jump Variables
     [Header("Jump Stats")]
     [SerializeField] Transform groundCheckPoint;
@@ -57,6 +71,16 @@ public class PlayerScript : MonoBehaviour
     #endregion
 
 
+    public void TakeDamage(float damage)
+    {
+        currentHealth -= damage;
+
+        if (currentHealth < 0)
+        {
+            //Game Over
+            print("dead");
+        }
+    }
 
     // Start is called before the first frame update
 
@@ -312,7 +336,7 @@ public class PlayerScript : MonoBehaviour
 
     #region Gizmos
     //Desenha a esfera no pe do personagem para visualizacao
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.green;
         Gizmos.DrawSphere(groundCheckPoint.position, 0.2f);
