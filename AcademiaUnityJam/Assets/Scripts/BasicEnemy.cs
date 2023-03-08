@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class BasicEnemy : MonoBehaviour
 {
+
+    [SerializeField] private Transform attackPoint;
+    [SerializeField] private float attackRange;
+    [SerializeField, HideInInspector] private LayerMask playerLayer;
+
+    private PlayerScript playerScript;
     private PlayerManager playerManager;
     public int maxHealth;
     private int currentHealth;
@@ -13,19 +19,36 @@ public class BasicEnemy : MonoBehaviour
     void Start()
     {
         playerManager = FindObjectOfType<PlayerManager>();
+        playerScript = FindObjectOfType<PlayerScript>();
 
         currentHealth = maxHealth;
 
         CreateAura(Random.Range(0, 4),Random.Range(0,3));
     }
-    #region Aura Creation
-    public void CreateAura(int auraColor,int manyAuras)
+
+    #region Doing Damage
+    private void Attack()
+    {
+        
+    Collider2D[] playerHit = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, playerLayer);
+        if(playerHit != null)
+        {
+            playerScript.TakeDamage(10);
+        }
+        
+    }
+
+#endregion
+
+#region Aura Creation
+public void CreateAura(int auraColor,int manyAuras)
     
     {
         switch(auraColor)
         {
             case 0:
                 //falta colocar o visual da Aura (fazer na função aura color)
+
                 auraShield1 = 0;
                 break;
             case 1:
@@ -74,9 +97,7 @@ public class BasicEnemy : MonoBehaviour
 
 
 
-        print(auraShield1); 
-        print(auraShield2); 
-        print(auraShield3);
+        //print(auraShield1 + auraShield2 + auraShield3); 
     }
 
     private void AuraVisual(int auraColor)
@@ -84,6 +105,8 @@ public class BasicEnemy : MonoBehaviour
 
     }
     #endregion
+
+    #region Taking Damage
     public void TakeDamageShield(int damageColor)
     {
         //Animação de tomar dano
@@ -140,10 +163,18 @@ public class BasicEnemy : MonoBehaviour
     {
         //animação de morrer
 
-        //Destroi o objeto (usar pull se der tempo)
+
+        //recarrega a barra de Lobo
         playerManager.FillWolfBar();
+
         //Trocar destroy por pull
         Destroy(gameObject);
+    }
+    #endregion
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
 
 }
