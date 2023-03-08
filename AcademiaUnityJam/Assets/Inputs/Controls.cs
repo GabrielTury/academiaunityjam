@@ -89,12 +89,32 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""NextDialogue"",
+                    ""type"": ""Button"",
+                    ""id"": ""7587d5b6-b6ae-4bb7-9bab-744049be3de3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
                 {
                     ""name"": """",
                     ""id"": ""164a9001-d96f-4e46-9a03-0812fb7f5d9b"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9fedb85d-a0aa-4e5c-99a3-5699e0bd7d34"",
                     ""path"": ""<Keyboard>/upArrow"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -139,7 +159,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""eeef8e65-4a0d-4205-95fe-c427fc460665"",
-                    ""path"": ""<Keyboard>/q"",
+                    ""path"": ""<Keyboard>/z"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -150,7 +170,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""5997e691-7e66-4914-be01-6d223acc93a9"",
-                    ""path"": ""<Keyboard>/space"",
+                    ""path"": ""<Keyboard>/v"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -161,7 +181,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""efbff3bf-7cb0-4009-89fa-7c400a20164f"",
-                    ""path"": ""<Keyboard>/w"",
+                    ""path"": ""<Keyboard>/x"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -172,7 +192,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""2edc5a92-9930-46de-b197-08de662ae815"",
-                    ""path"": ""<Keyboard>/e"",
+                    ""path"": ""<Keyboard>/c"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -188,6 +208,17 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Attack4"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1288ee62-94da-48bb-9a49-03d336cded84"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""NextDialogue"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -326,6 +357,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         m_Player_Attack3 = m_Player.FindAction("Attack3", throwIfNotFound: true);
         m_Player_Attack4 = m_Player.FindAction("Attack4", throwIfNotFound: true);
         m_Player_Morph = m_Player.FindAction("Morph", throwIfNotFound: true);
+        m_Player_NextDialogue = m_Player.FindAction("NextDialogue", throwIfNotFound: true);
         // Lobo
         m_Lobo = asset.FindActionMap("Lobo", throwIfNotFound: true);
         m_Lobo_Movement = m_Lobo.FindAction("Movement", throwIfNotFound: true);
@@ -398,6 +430,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Attack3;
     private readonly InputAction m_Player_Attack4;
     private readonly InputAction m_Player_Morph;
+    private readonly InputAction m_Player_NextDialogue;
     public struct PlayerActions
     {
         private @Controls m_Wrapper;
@@ -409,6 +442,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         public InputAction @Attack3 => m_Wrapper.m_Player_Attack3;
         public InputAction @Attack4 => m_Wrapper.m_Player_Attack4;
         public InputAction @Morph => m_Wrapper.m_Player_Morph;
+        public InputAction @NextDialogue => m_Wrapper.m_Player_NextDialogue;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -439,6 +473,9 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @Morph.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMorph;
                 @Morph.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMorph;
                 @Morph.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMorph;
+                @NextDialogue.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNextDialogue;
+                @NextDialogue.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNextDialogue;
+                @NextDialogue.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNextDialogue;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -464,6 +501,9 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @Morph.started += instance.OnMorph;
                 @Morph.performed += instance.OnMorph;
                 @Morph.canceled += instance.OnMorph;
+                @NextDialogue.started += instance.OnNextDialogue;
+                @NextDialogue.performed += instance.OnNextDialogue;
+                @NextDialogue.canceled += instance.OnNextDialogue;
             }
         }
     }
@@ -534,6 +574,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         void OnAttack3(InputAction.CallbackContext context);
         void OnAttack4(InputAction.CallbackContext context);
         void OnMorph(InputAction.CallbackContext context);
+        void OnNextDialogue(InputAction.CallbackContext context);
     }
     public interface ILoboActions
     {
