@@ -116,6 +116,7 @@ public class PlayerScript : MonoBehaviour
     {
         initialAcceleration = acceleration;
         maxSpeed0 = maxSpeed;
+        currentHealth = maxHealth;
     }
 
     #region Updates
@@ -124,16 +125,10 @@ public class PlayerScript : MonoBehaviour
 
         playerDirection = playerInputs.Player.Movement.ReadValue<float>();
 
-        /*if (human)
-        {
-            playerDirection = playerInputs.Player.Movement.ReadValue<float>();        
-        }
+        if(playerDirection!=0)
+            Run();
         else
-        {
-            playerDirection = playerInputs.Lobo.Movement.ReadValue<float>();          
-        }*/
-
-        Run();
+            Break();
         
     }
     void Update()
@@ -287,6 +282,14 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
+    private void Break()
+    {
+        if (IsGrounded() && playerDirection == 0)
+        {
+            playerRbd.velocity = new Vector2(0,playerRbd.velocity.y);
+        }
+    }
+
     //Troca direcao do personagem conservando parte da sua velocidade
     void ChangeDirection()
     {
@@ -295,7 +298,7 @@ public class PlayerScript : MonoBehaviour
         transform.localScale = scale;
         float actualVelocity;
         actualVelocity = playerRbd.velocity.x;
-        actualVelocity *= -0.3f;
+        actualVelocity *= -0.9f;
         playerRbd.velocity = new Vector2(actualVelocity, playerRbd.velocity.y);
     }
     #endregion

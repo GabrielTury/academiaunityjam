@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1463421554
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1463421555}
+  m_Layer: 0
+  m_Name: attackPoint1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1463421555
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1463421554}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.609, y: 0.015, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7502603765096056935}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7502603764783988553
 GameObject:
   m_ObjectHideFlags: 0
@@ -43,9 +73,9 @@ GameObject:
   - component: {fileID: 7502603765096056933}
   - component: {fileID: 7502603765096056932}
   - component: {fileID: 7502603765096056930}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -62,6 +92,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7502603764783988566}
+  - {fileID: 1463421555}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -175,8 +206,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84ba86fa42201be4ea2f55b05c181852, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerManager: {fileID: 0}
+  dialogueManager: {fileID: 0}
   acceleration: 10
   maxSpeed: 3
+  attackRange: 0.69
+  attackPoint1: {fileID: 1463421555}
+  attackPoint2: {fileID: 1463421555}
+  attackPoint3: {fileID: 1463421555}
+  attackPoint4: {fileID: 1463421555}
+  attack1Cooldown: 1
+  attack2Cooldown: 0
+  attack3Cooldown: 0
+  attack4Cooldown: 0
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  maxHealth: 100
   groundCheckPoint: {fileID: 7502603764783988566}
   groundLayer:
     serializedVersion: 2

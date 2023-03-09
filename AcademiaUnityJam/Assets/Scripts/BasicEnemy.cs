@@ -7,98 +7,66 @@ public class BasicEnemy : MonoBehaviour
 
     [SerializeField] private Transform attackPoint;
     [SerializeField] private float attackRange;
-    [SerializeField, HideInInspector] private LayerMask playerLayer;
+    [SerializeField] private LayerMask playerLayer;
 
+    Animator anima;
     private PlayerScript playerScript;
     private PlayerManager playerManager;
+    private EnemyManager enemyManager;
     public int maxHealth;
     private int currentHealth;
 
-    private int auraShield1, auraShield2, auraShield3;
+    private bool isAttacking = false;
+
+    internal int auraShield1, auraShield2, auraShield3;
+
     // Start is called before the first frame update
     void Start()
     {
         playerManager = FindObjectOfType<PlayerManager>();
         playerScript = FindObjectOfType<PlayerScript>();
+        enemyManager= FindObjectOfType<EnemyManager>();
+        anima = GetComponent<Animator>();
 
         currentHealth = maxHealth;
 
-        CreateAura(Random.Range(0, 4),Random.Range(0,3));
+        enemyManager.CreateAura(Random.Range(0, 3),Random.Range(0,3),this);
+    }
+
+    private void Update()
+    {
+
+        if(!isAttacking)
+        {
+            Collider2D playerHit = Physics2D.OverlapCircle(attackPoint.position, attackRange, playerLayer);
+
+
+            if (playerHit != null)
+            {
+                print("Acertou");
+                anima.SetTrigger("Attack");
+                StartCoroutine(Attack(playerHit));
+                isAttacking = true;
+            }
+        }
     }
 
     #region Doing Damage
-    private void Attack()
+    IEnumerator Attack(Collider2D playerHit)
     {
-        
-    Collider2D[] playerHit = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, playerLayer);
-        if(playerHit != null)
-        {
-            playerScript.TakeDamage(10);
-        }
-        
+        playerScript.TakeDamage(10);
+
+        yield return new WaitForSeconds(3);
+
+        anima.ResetTrigger("Attack");
+        isAttacking= false;
+
     }
 
-#endregion
+    #endregion
 
-#region Aura Creation
-public void CreateAura(int auraColor,int manyAuras)
-    
-    {
-        switch(auraColor)
-        {
-            case 0:
-                //falta colocar o visual da Aura (fazer na função aura color)
+    #region Aura Creation
 
-                auraShield1 = 0;
-                break;
-            case 1:
-                //falta colocar o visual da Aura
-                auraShield1 = 1;
-                break;
-            case 2:
-                //falta colocar o visual da Aura
-                auraShield1 = 2;
-                break;
-            case 3:
-                //falta colocar o visual da Aura
-                auraShield1 = 3;
-                break;
-        }
-
-        if(manyAuras >= 1)
-        {
-            do 
-            { 
-
-                auraShield2 = Random.Range(0, 4);
-
-            }
-            while(auraShield2 == auraShield1);
-
-            auraShield3 = -1;
-            
-        }
-        
-        if(manyAuras == 2)
-        {
-            do
-            {
-                auraShield3 = Random.Range(0, 4);
-
-            }
-            while (auraShield3 == auraShield1 || auraShield3 == auraShield1);
-        }else if(manyAuras == 0)      
-        {
-
-            auraShield2 = -1;
-            auraShield3 = -1;
-
-        }
-
-
-
-        //print(auraShield1 + auraShield2 + auraShield3); 
-    }
 
     private void AuraVisual(int auraColor)
     {
