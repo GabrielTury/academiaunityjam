@@ -217,7 +217,10 @@ public class PlayerScript : MonoBehaviour
 
         foreach (Collider2D enemy in enemiesHit)
         {
+            if(enemy.CompareTag("Melee"))
             enemy.GetComponent<BasicEnemy>().TakeDamageShield(damageColor);
+            else if (enemy.CompareTag("Ranged"))
+            enemy.GetComponent<RangedEnemy>().TakeDamageShield(damageColor);
         }
     }
 
