@@ -2,42 +2,42 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BasicEnemy : EnemyManager
+public class RangedEnemy : EnemyManager
 {
 
     [SerializeField] private Transform attackPoint;
     [SerializeField] private float attackRange;
     [SerializeField] private LayerMask playerLayer;
 
+    [SerializeField] private GameObject bullet;
 
 
     private bool isAttacking = false;
 
-    
 
     // Start is called before the first frame update
     void Start()
     {
         playerManager = FindObjectOfType<PlayerManager>();
         playerScript = FindObjectOfType<PlayerScript>();
+
         anima = GetComponent<Animator>();
 
         currentHealth = maxHealth;
 
-        CreateAura(Random.Range(0, 3),Random.Range(0,3));
+        CreateAura(Random.Range(0, 3), Random.Range(0, 3));
     }
 
     private void Update()
     {
 
-        if(!isAttacking)
+        if (!isAttacking)
         {
-            Collider2D playerHit = Physics2D.OverlapCircle(attackPoint.position, attackRange, playerLayer);
+            Collider2D playerHit = Physics2D.OverlapCircle(transform.position, attackRange, playerLayer);
 
 
             if (playerHit != null)
             {
-                print("Acertou");
                 anima.SetTrigger("Attack");
                 StartCoroutine(Attack(playerHit));
                 isAttacking = true;
@@ -48,12 +48,12 @@ public class BasicEnemy : EnemyManager
     #region Doing Damage
     IEnumerator Attack(Collider2D playerHit)
     {
-        playerScript.TakeDamage(10);
+        Instantiate(bullet, attackPoint.position, attackPoint.rotation);
 
         yield return new WaitForSeconds(3);
 
         anima.ResetTrigger("Attack");
-        isAttacking= false;
+        isAttacking = false;
 
     }
 
@@ -80,7 +80,7 @@ public class BasicEnemy : EnemyManager
         }
 
 
-        if (auraShield1 == damageColor) 
+        if (auraShield1 == damageColor)
         {
 
             //Destrói a aura
@@ -90,23 +90,24 @@ public class BasicEnemy : EnemyManager
             auraShield1 = -1;
 
         }
-        else if(auraShield2 == damageColor)
+        else if (auraShield2 == damageColor)
         {
 
             auraShield2 = -1;
 
         }
-        else if(auraShield3 == damageColor)
+        else if (auraShield3 == damageColor)
         {
 
             auraShield3 = -1;
 
-        }else if (damageColor == 4)
+        }
+        else if (damageColor == 4)
         {
             TakeDamageHealth(40);
         }
 
-        
+
 
     }
 
@@ -114,7 +115,7 @@ public class BasicEnemy : EnemyManager
     {
 
         currentHealth -= damage;
-        if(currentHealth <= 0)
+        if (currentHealth <= 0)
         {
             Die();
         }
@@ -135,8 +136,8 @@ public class BasicEnemy : EnemyManager
     #endregion
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, attackRange);
     }
 
 }

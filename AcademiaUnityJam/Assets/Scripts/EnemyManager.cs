@@ -4,23 +4,31 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
+    protected Animator anima;
+    protected PlayerScript playerScript;
+    protected PlayerManager playerManager;
+    public int maxHealth;
+    protected int currentHealth;
 
-    public void CreateAura(int auraColor, int manyAuras, BasicEnemy enemy)
+    protected int auraShield1, auraShield2, auraShield3;
+
+
+    public void CreateAura(int auraColor, int manyAuras)
 
     {
-        enemy.auraShield1 = auraColor;
+        auraShield1 = auraColor;
 
         if (manyAuras >= 1)
         {
             do
             {
 
-                enemy.auraShield2 = Random.Range(0, 3);
+                auraShield2 = Random.Range(0, 3);
 
             }
-            while (enemy.auraShield2 == enemy.auraShield1);
+            while (auraShield2 == auraShield1);
 
-            enemy.auraShield3 = -1;
+            auraShield3 = -1;
 
         }
 
@@ -28,16 +36,16 @@ public class EnemyManager : MonoBehaviour
         {
             do
             {
-                enemy.auraShield3 = Random.Range(0, 3);
+                auraShield3 = Random.Range(0, 3);
 
             }
-            while (enemy.auraShield3 == enemy.auraShield1 || enemy.auraShield3 == enemy.auraShield1);
+            while (auraShield3 == auraShield1 || auraShield3 == auraShield1);
         }
         else if (manyAuras == 0)
         {
 
-            enemy.auraShield2 = -1;
-            enemy.auraShield3 = -1;
+            auraShield2 = -1;
+            auraShield3 = -1;
 
         }
 
@@ -45,7 +53,6 @@ public class EnemyManager : MonoBehaviour
 
         //print(auraShield1 + auraShield2 + auraShield3); 
     }
-
 
 
 }
