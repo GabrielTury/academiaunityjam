@@ -8,6 +8,7 @@ public class PlayerScript : MonoBehaviour
 {
     public PlayerManager playerManager;
     public DialogueManager dialogueManager;
+    
 
     float playerDirection;
     Vector2 scale;
