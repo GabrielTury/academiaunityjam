@@ -46,9 +46,9 @@ public class PlayerScript : MonoBehaviour
     private int damageColor1 = 0, damageColor2 = 1, damageColor3 = 2, damageColor4 = 3;
 
     [SerializeField]
-    private float attack1Cooldown, attack2Cooldown, attack3Cooldown, attack4Cooldown;
+    private float attack1Cooldown, attack2Cooldown, attack3Cooldown, attackWolfCooldown, attackWolf2Cooldown;
 
-    private float lastAttack1 = 100, lastAttack2 = 100, lastAttack3 = 100, lastAttack4 = 100, lastAttackWolf = 10;
+    private float lastAttack1 = 100, lastAttack2 = 100, lastAttack3 = 100, lastAttackWolf = 10, lastAttackWolf2 = 10;
 
     [SerializeField]
     private LayerMask enemyLayer;
@@ -100,7 +100,6 @@ public class PlayerScript : MonoBehaviour
         playerInputs.Player.Attack1.started += Attack1;
         playerInputs.Player.Attack2.started += Attack2;
         playerInputs.Player.Attack3.started += Attack3;
-        playerInputs.Player.Attack4.started += Attack4;
         playerInputs.Player.NextDialogue.started += NextDialogue_started;
         playerRbd = GetComponent<Rigidbody2D>();
 
@@ -146,24 +145,12 @@ public class PlayerScript : MonoBehaviour
         lastAttack1 += Time.deltaTime;
         lastAttack2 += Time.deltaTime;
         lastAttack3 += Time.deltaTime;
-        lastAttack4 += Time.deltaTime;
         lastAttackWolf += Time.deltaTime;
+        lastAttackWolf2 += Time.deltaTime;
     }
     #endregion
 
     #region Attacks    
-    private void Attack4(InputAction.CallbackContext obj)
-    {
-        if (human && lastAttack4 > attack4Cooldown)
-        {
-            DoDamage(attackPoint4, attackRange, damageColor4);
-
-            lastAttack4 = 0f;
-
-            print("ataque 4");
-        }
-    }
-
     private void Attack3(InputAction.CallbackContext obj)
     {
         if (human && lastAttack3 > attack3Cooldown)
@@ -185,6 +172,16 @@ public class PlayerScript : MonoBehaviour
 
             print("ataque 2 humano");
         }
+        else if (!human && lastAttackWolf2 > attackWolf2Cooldown)
+        {
+
+            DoDamage(attackPoint2, attackRange, 4);
+
+            lastAttackWolf = 0f;
+
+            print("ataque 1 lobo");
+        }
+
     }
     
     private void Attack1(InputAction.CallbackContext obj)
@@ -199,7 +196,7 @@ public class PlayerScript : MonoBehaviour
 
             print("ataque 1 humano");
         }
-        else if(!human/*colocar cooldown do lobo aqui*/)
+        else if(!human && lastAttackWolf > attackWolfCooldown)
         {
 
             DoDamage(attackPoint1, attackRange, 4);

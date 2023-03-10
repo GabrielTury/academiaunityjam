@@ -39,18 +39,18 @@ public class RangedEnemy : EnemyManager
             if (playerHit != null)
             {
                 anima.SetTrigger("Attack");
-                StartCoroutine(Attack(playerHit));
+                //StartCoroutine(Attack(playerHit));
                 isAttacking = true;
             }
         }
     }
 
     #region Doing Damage
-    IEnumerator Attack(Collider2D playerHit)
+    public void Attack(/*Collider2D playerHit*/)
     {
         Instantiate(bullet, attackPoint.position, attackPoint.rotation);
 
-        yield return new WaitForSeconds(3);
+        //yield return new WaitForSeconds(3);
 
         anima.ResetTrigger("Attack");
         isAttacking = false;
