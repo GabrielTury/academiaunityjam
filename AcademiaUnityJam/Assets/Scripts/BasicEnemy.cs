@@ -39,18 +39,18 @@ public class BasicEnemy : EnemyManager
             {
                 print("Acertou");
                 anima.SetTrigger("Attack");
-                StartCoroutine(Attack(playerHit));
+                //StartCoroutine(Attack(playerHit));
                 isAttacking = true;
             }
         }
     }
 
     #region Doing Damage
-    IEnumerator Attack(Collider2D playerHit)
+    public void Attack()
     {
         playerScript.TakeDamage(10);
 
-        yield return new WaitForSeconds(3);
+        //yield return new WaitForSeconds(3);
 
         anima.ResetTrigger("Attack");
         isAttacking= false;
