@@ -195,9 +195,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05efd3f1a43354e4e9f4688558d72313, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  patrolPoint1: {fileID: 0}
+  patrolPoint2: {fileID: 0}
   maxHealth: 100
+  speed: 1
+  patrolPointRange: 0
   attackPoint: {fileID: 485256698}
-  attackRange: 4.35
+  attackRange: 13.56
   playerLayer:
     serializedVersion: 2
     m_Bits: 256
