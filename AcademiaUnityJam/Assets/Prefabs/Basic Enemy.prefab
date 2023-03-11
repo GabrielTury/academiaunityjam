@@ -146,7 +146,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4443f1e02d22ace4e826482477a6feed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  patrolPoint1: {fileID: 0}
+  patrolPoint2: {fileID: 0}
   maxHealth: 100
+  speed: 0
+  patrolPointRange: 0
   attackPoint: {fileID: 2980441561475665767}
   attackRange: 0.93
   playerLayer:

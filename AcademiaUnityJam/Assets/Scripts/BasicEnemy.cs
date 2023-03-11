@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class BasicEnemy : EnemyManager
 {
+    [SerializeField] private Transform patrolPoint1, patrolPoint2;
 
     [SerializeField] private Transform attackPoint;
     [SerializeField] private float attackRange;
     [SerializeField] private LayerMask playerLayer;
+
+    private Rigidbody2D rdbd;
 
 
 
@@ -21,26 +24,50 @@ public class BasicEnemy : EnemyManager
         playerManager = FindObjectOfType<PlayerManager>();
         playerScript = FindObjectOfType<PlayerScript>();
         anima = GetComponent<Animator>();
+        rdbd = GetComponent<Rigidbody2D>();
 
         currentHealth = maxHealth;
 
         CreateAura(Random.Range(0, 3),Random.Range(0,3));
+
+        currentWaypoint = patrolPoint2.position;
+       
+    }
+
+    private void FixedUpdate()
+    {
+        if(!isAttacking)
+        rdbd.velocity = new Vector2(speed, rdbd.velocity.y);
     }
 
     private void Update()
     {
 
+       
+
+        
+        
+            
+            
+
+        
+
         if(!isAttacking)
         {
+            Patrol(patrolPoint1, patrolPoint2);
+
             Collider2D playerHit = Physics2D.OverlapCircle(attackPoint.position, attackRange, playerLayer);
 
 
             if (playerHit != null)
             {
-                print("Acertou");
+
+                rdbd.velocity = Vector2.zero;
+                print(playerHit.name);
                 anima.SetTrigger("Attack");
                 //StartCoroutine(Attack(playerHit));
                 isAttacking = true;
+                playerHit = null;
             }
         }
     }
@@ -50,13 +77,27 @@ public class BasicEnemy : EnemyManager
     {
         playerScript.TakeDamage(10);
 
-        //yield return new WaitForSeconds(3);
+    }
+    private void CheckAttack()
+    {
+        Collider2D playerHit = Physics2D.OverlapCircle(attackPoint.position, attackRange, playerLayer);
 
-        anima.ResetTrigger("Attack");
-        isAttacking= false;
 
+        if (playerHit != null)
+        {
+            anima.SetTrigger("Attack");
+            playerHit = null;
+        }
+        else
+        {
+            ResumePatrol();
+        }
     }
 
+    private void ResumePatrol()
+    {
+        isAttacking = false;
+    }
     #endregion
 
     #region Aura Creation
@@ -137,6 +178,8 @@ public class BasicEnemy : EnemyManager
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(currentWaypoint, patrolPointRange);
     }
 
 }

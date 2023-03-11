@@ -11,9 +11,9 @@ public class Bullet : MonoBehaviour
     void Start()
     {
         bulletRbd= GetComponent<Rigidbody2D>();
-        bulletRbd.velocity = transform.right * -1 * speed;
+        bulletRbd.velocity = transform.right * speed;
 
-        Invoke("Destroy", 10);
+        Invoke("Destroy", 5);
     }
 
     private void Destroy()

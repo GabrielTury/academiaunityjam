@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class RangedEnemy : EnemyManager
 {
+    [SerializeField] private Transform patrolPoint1, patrolPoint2;
 
     [SerializeField] private Transform attackPoint;
-    [SerializeField] private float attackRange;
+    [SerializeField] private Transform attackRange;
     [SerializeField] private LayerMask playerLayer;
+
+    private Rigidbody2D rdbd;
 
     [SerializeField] private GameObject bullet;
 
@@ -20,20 +23,36 @@ public class RangedEnemy : EnemyManager
     {
         playerManager = FindObjectOfType<PlayerManager>();
         playerScript = FindObjectOfType<PlayerScript>();
+        rdbd= GetComponent<Rigidbody2D>();
 
         anima = GetComponent<Animator>();
 
         currentHealth = maxHealth;
+        currentWaypoint = patrolPoint2.position;
 
         CreateAura(Random.Range(0, 3), Random.Range(0, 3));
+    }
+
+    private void FixedUpdate()
+    {
+        if (!isAttacking)
+        rdbd.velocity = new Vector2(speed, rdbd.velocity.y);
     }
 
     private void Update()
     {
 
+        
+
+
+            
+
+        
+
         if (!isAttacking)
         {
-            Collider2D playerHit = Physics2D.OverlapCircle(transform.position, attackRange, playerLayer);
+            Collider2D playerHit = Physics2D.OverlapArea(transform.position, attackRange.position, playerLayer);
+            Patrol(patrolPoint1, patrolPoint2);
 
 
             if (playerHit != null)
@@ -41,6 +60,7 @@ public class RangedEnemy : EnemyManager
                 anima.SetTrigger("Attack");
                 //StartCoroutine(Attack(playerHit));
                 isAttacking = true;
+                playerHit = null;
             }
         }
     }
@@ -51,10 +71,27 @@ public class RangedEnemy : EnemyManager
         Instantiate(bullet, attackPoint.position, attackPoint.rotation);
 
         //yield return new WaitForSeconds(3);
+        ResumePatrol();
+    }
 
-        anima.ResetTrigger("Attack");
+    /*private void CheckAttack()
+    {
+        Collider2D playerHit = Physics2D.OverlapArea(transform.position, attackRange.position, playerLayer);
+
+        if (playerHit != null)
+        {
+            anima.SetTrigger("Attack");
+            playerHit = null;
+        }
+        else
+        {
+            ResumePatrol();
+        }
+    }*/
+
+    private void ResumePatrol()
+    {
         isAttacking = false;
-
     }
 
     #endregion
@@ -137,7 +174,9 @@ public class RangedEnemy : EnemyManager
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, attackRange);
+        Gizmos.DrawLine(transform.position, attackRange.position);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(currentWaypoint, patrolPointRange);
     }
 
 }
