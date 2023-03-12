@@ -43,5 +43,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46825b34f73145b4fae5d1b02f0adbe5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slider: {fileID: 0}
+  wolfFill: {fileID: 0}
+  healthFill: {fileID: 0}
+  wolfReady: {fileID: 0}
+  wolfAttack1: {fileID: 0}
+  wolfAttack2: {fileID: 0}
   playerScript: {fileID: 0}

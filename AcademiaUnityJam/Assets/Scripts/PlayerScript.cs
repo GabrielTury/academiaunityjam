@@ -8,6 +8,7 @@ public class PlayerScript : MonoBehaviour
 {
     public PlayerManager playerManager;
     public DialogueManager dialogueManager;
+    private Animator anima;
     
 
     float playerDirection;
@@ -44,12 +45,12 @@ public class PlayerScript : MonoBehaviour
     private Transform attackPoint1, attackPoint2, attackPoint3, attackPoint4;
 
     //[SerializeField]
-    private int damageColor1 = 0, damageColor2 = 1, damageColor3 = 2, damageColor4 = 3;
+    private int damageColor1 = 0, damageColor2 = 1, damageColor3 = 2;
 
-    [SerializeField]
-    private float attack1Cooldown, attack2Cooldown, attack3Cooldown, attackWolfCooldown, attackWolf2Cooldown;
+    private bool canAttack1 = true, canAttack2 = true, canAttack3 = true, canAttackWolf1 = true, canAttackWolf2 = true, isAttacking;
+/*    private float attack1Cooldown, attack2Cooldown, attack3Cooldown, attackWolfCooldown, attackWolf2Cooldown;
 
-    private float lastAttack1 = 100, lastAttack2 = 100, lastAttack3 = 100, lastAttackWolf = 10, lastAttackWolf2 = 10;
+    private float lastAttack1 = 100, lastAttack2 = 100, lastAttack3 = 100, lastAttackWolf = 10, lastAttackWolf2 = 10;*/
 
     [SerializeField]
     private LayerMask enemyLayer;
@@ -82,6 +83,7 @@ public class PlayerScript : MonoBehaviour
     public void TakeDamage(float damage)
     {
         currentHealth -= damage;
+        playerManager.healthFill.fillAmount = currentHealth / 100;
 
         if (currentHealth < 0)
         {
@@ -102,11 +104,19 @@ public class PlayerScript : MonoBehaviour
         playerInputs.Player.Attack2.started += Attack2;
         playerInputs.Player.Attack3.started += Attack3;
         playerInputs.Player.NextDialogue.started += NextDialogue_started;
+        playerInputs.Player.Dodge.started += Dodge;
         playerRbd = GetComponent<Rigidbody2D>();
+        anima = GetComponent<Animator>();
 
 
     }
 
+    #region Dodge
+    private void Dodge(InputAction.CallbackContext obj)
+    {
+        //Dash pra frente que torna o char invulneravel e atravessa inimigos
+    }
+    #endregion
     private void NextDialogue_started(InputAction.CallbackContext obj)
     {
         dialogueManager.DisplayNextSentence();
@@ -142,69 +152,80 @@ public class PlayerScript : MonoBehaviour
         {
             lastOnGroundTime -= Time.deltaTime;
         }
-
-        lastAttack1 += Time.deltaTime;
-        lastAttack2 += Time.deltaTime;
-        lastAttack3 += Time.deltaTime;
-        lastAttackWolf += Time.deltaTime;
-        lastAttackWolf2 += Time.deltaTime;
     }
     #endregion
 
     #region Attacks    
     private void Attack3(InputAction.CallbackContext obj)
     {
-        if (human && lastAttack3 > attack3Cooldown)
+        if (human && canAttack3 && !isAttacking)
         {
             DoDamage(attackPoint3, attackRange, damageColor3);
+            canAttack3= false;
+            isAttacking = true;
+            anima.SetTrigger("Attack3");
 
-            lastAttack3 = 0f;
-
-            print("ataque 3");
         }
     }
     private void Attack2(InputAction.CallbackContext obj)
     {
-        if (human && lastAttack2 > attack2Cooldown)
+        if (human && canAttack2 && !isAttacking)
         {
             DoDamage(attackPoint2, attackRange, damageColor2);
-
-            lastAttack2 = 0f;
-
-            print("ataque 2 humano");
+            canAttack2= false;
+            isAttacking = true;
+            anima.SetTrigger("Attack2");
         }
-        else if (!human && lastAttackWolf2 > attackWolf2Cooldown)
+        else if (!human && canAttackWolf2 && !isAttacking)
         {
 
             DoDamage(attackPoint2, attackRange, 4);
-
-            lastAttackWolf = 0f;
-
-            print("ataque 1 lobo");
+            canAttackWolf2= false;
+            isAttacking = true;
         }
 
     }
     
     private void Attack1(InputAction.CallbackContext obj)
     {
-        print(lastAttack1);
-        if (human && lastAttack1 > attack1Cooldown)
+        if (human && canAttack1 && !isAttacking)
         {
 
             DoDamage(attackPoint1, attackRange, damageColor1);
-
-            lastAttack1 = 0f;
-
-            print("ataque 1 humano");
+            canAttack1 = false;
+            isAttacking = true;
+            anima.SetTrigger("Attack1");
         }
-        else if(!human && lastAttackWolf > attackWolfCooldown)
+        else if(!human && canAttackWolf1 && !isAttacking)
         {
 
             DoDamage(attackPoint1, attackRange, 4);
+            canAttackWolf1= false;
+            isAttacking = true;
+        }
+    }
 
-            lastAttackWolf = 0f;
+    public void ResetAttack(string whichAttack)
+    {
+        isAttacking = false;
+        switch(whichAttack)
+        {
+            case "Attack1":
+                canAttack1 = true;
+                break;
+            case "Attack2":
+                canAttack2 = true;
+                break;
+            case "Attack3":
+                canAttack3 = true;
+                break;
+            case "WolfAttack1":
+                canAttackWolf1= true;
+                break;
+            case "WolfAttack2":
+                canAttackWolf2= true;
+                break;
 
-            print("ataque 1 lobo");
         }
     }
 
@@ -312,7 +333,7 @@ public class PlayerScript : MonoBehaviour
         if (context.started)
         {
             //Troca de humano para lobo
-            if (human && playerManager.slider.value == 1f)
+            if (human && playerManager.wolfFill.fillAmount == 1f)
             {
                 //playerInputs.Player.Disable();
                 //playerInputs.Lobo.Enable();
@@ -321,6 +342,8 @@ public class PlayerScript : MonoBehaviour
                 jumpForce -= 3f;
 
                 playerManager.ResetWolfBar(10);
+                playerManager.FillHealthBar();
+                currentHealth = maxHealth;
 
                 print("Virou lobo");
             }

@@ -7,7 +7,9 @@ public class PlayerManager : MonoBehaviour
 {
     bool start = false;
 
-    public Slider slider;
+    public Image wolfFill;
+    public Image healthFill;
+    public GameObject wolfReady, wolfAttack1, wolfAttack2, attackGreen;
 
     public PlayerScript playerScript;
 
@@ -18,29 +20,47 @@ public class PlayerManager : MonoBehaviour
         
     }
 
+    public void FillHealthBar()
+    {
+        healthFill.fillAmount = 1;
+    }
 
     public void FillWolfBar()
     {
-        slider.value += 0.1f;
+        wolfFill.fillAmount += 0.2f;
     }
+
+
+
 
     public void ResetWolfBar(float wolfTime)
     {
         wolfTimer = wolfTime;
         start= true;
+        wolfReady.SetActive(true);
+        wolfAttack1.SetActive(true);
+        wolfAttack2.SetActive(true);
+        attackGreen.SetActive(false);
     }
     // Update is called once per frame
     void Update()
     {
         if (start)
-        wolfTimer -= Time.deltaTime;
+        {
+            wolfTimer -= Time.deltaTime;
+            wolfFill.fillAmount = wolfTimer/10;
+        }
 
 
         if (wolfTimer <= 0 && start)
         {
             playerScript.UnMorph();
-            slider.value = 0;
+            wolfFill.fillAmount = 0;
             start = false;
+            wolfReady.SetActive(false);
+            wolfAttack1.SetActive(false);
+            wolfAttack2.SetActive(false);
+            attackGreen.SetActive(true);
         }
     }
 }
