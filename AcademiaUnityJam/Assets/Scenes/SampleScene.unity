@@ -1265,6 +1265,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1137461462}
   m_CullTransparentMesh: 1
+--- !u!1 &1167892136
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1167892137}
+  m_Layer: 8
+  m_Name: attackPoint3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1167892137
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1167892136}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.71, y: 0.08, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 583256001}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1323624933
 GameObject:
   m_ObjectHideFlags: 0
@@ -2691,10 +2721,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1463421555, guid: 42fe1ccd216d39e4fbb43a4952870ed1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.012
+      objectReference: {fileID: 0}
     - target: {fileID: 7502603765096056857, guid: 42fe1ccd216d39e4fbb43a4952870ed1, type: 3}
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 7502603765096056930, guid: 42fe1ccd216d39e4fbb43a4952870ed1, type: 3}
+      propertyPath: maxSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7502603765096056930, guid: 42fe1ccd216d39e4fbb43a4952870ed1, type: 3}
+      propertyPath: attackRange
+      value: 1.31
+      objectReference: {fileID: 0}
+    - target: {fileID: 7502603765096056930, guid: 42fe1ccd216d39e4fbb43a4952870ed1, type: 3}
+      propertyPath: attackPoint3
+      value: 
+      objectReference: {fileID: 1167892137}
     - target: {fileID: 7502603765096056930, guid: 42fe1ccd216d39e4fbb43a4952870ed1, type: 3}
       propertyPath: playerManager
       value: 

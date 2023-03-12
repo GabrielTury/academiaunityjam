@@ -142,6 +142,10 @@ public class PlayerScript : MonoBehaviour
     }
     void Update()
     {
+
+        anima.SetFloat("Velocity", Mathf.Abs(playerRbd.velocity.x));
+        anima.SetFloat("VelocityY",Mathf.Abs(playerRbd.velocity.y));
+        anima.SetBool("IsGrounded", IsGrounded());
         //Coyote Time 
         if (IsGrounded())
         {
@@ -392,6 +396,9 @@ public class PlayerScript : MonoBehaviour
 
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(attackPoint1.position, attackRange);
+
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(attackPoint3.position, attackRange);
     }
     #endregion
 }
