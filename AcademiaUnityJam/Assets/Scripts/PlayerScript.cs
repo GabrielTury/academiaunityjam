@@ -42,7 +42,7 @@ public class PlayerScript : MonoBehaviour
     public float attackRange;
 
     [SerializeField]
-    private Transform attackPoint1, attackPoint2, attackPoint3, attackPoint4;
+    private Transform attackPoint1, attackPoint2, attackPoint3;
 
     //[SerializeField]
     private int damageColor1 = 0, damageColor2 = 1, damageColor3 = 2;
@@ -88,11 +88,9 @@ public class PlayerScript : MonoBehaviour
         if (currentHealth < 0)
         {
             //Game Over
-            print("dead");
+            playerManager.GameOver();
         }
     }
-
-    // Start is called before the first frame update
 
     private void Awake()
     {
@@ -105,8 +103,7 @@ public class PlayerScript : MonoBehaviour
         playerInputs.Player.Attack3.started += Attack3;
         playerInputs.Player.NextDialogue.started += NextDialogue_started;
         playerInputs.Player.Dodge.started += Dodge;
-        playerRbd = GetComponent<Rigidbody2D>();
-        anima = GetComponent<Animator>();
+
 
 
     }
@@ -127,6 +124,8 @@ public class PlayerScript : MonoBehaviour
         initialAcceleration = acceleration;
         maxSpeed0 = maxSpeed;
         currentHealth = maxHealth;
+        playerRbd = GetComponent<Rigidbody2D>();
+        anima = GetComponent<Animator>();
     }
 
     #region Updates
@@ -143,6 +142,10 @@ public class PlayerScript : MonoBehaviour
     }
     void Update()
     {
+
+        anima.SetFloat("Velocity", Mathf.Abs(playerRbd.velocity.x));
+        anima.SetFloat("VelocityY",Mathf.Abs(playerRbd.velocity.y));
+        anima.SetBool("IsGrounded", IsGrounded());
         //Coyote Time 
         if (IsGrounded())
         {
@@ -370,7 +373,18 @@ public class PlayerScript : MonoBehaviour
     }
 
     #endregion
-    
+
+    public void OnDisable()
+    {
+        playerInputs.Player.Jump.performed -= Jump;
+        playerInputs.Player.Morph.started -= Morph;
+        playerInputs.Player.Attack1.started -= Attack1;
+        playerInputs.Player.Attack2.started -= Attack2;
+        playerInputs.Player.Attack3.started -= Attack3;
+        playerInputs.Player.NextDialogue.started -= NextDialogue_started;
+        playerInputs.Player.Dodge.started -= Dodge;
+        playerInputs.Player.Disable();
+    }
 
 
     #region Gizmos
@@ -382,6 +396,9 @@ public class PlayerScript : MonoBehaviour
 
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(attackPoint1.position, attackRange);
+
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(attackPoint3.position, attackRange);
     }
     #endregion
 }
