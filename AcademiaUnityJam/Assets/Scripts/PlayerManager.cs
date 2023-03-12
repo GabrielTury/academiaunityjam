@@ -10,6 +10,7 @@ public class PlayerManager : MonoBehaviour
     public Image wolfFill;
     public Image healthFill;
     public GameObject wolfReady, wolfAttack1, wolfAttack2, attackGreen;
+    public GameObject gameOver;
 
     public PlayerScript playerScript;
 
@@ -30,6 +31,11 @@ public class PlayerManager : MonoBehaviour
         wolfFill.fillAmount += 0.2f;
     }
 
+    public void GameOver()
+    {
+        Time.timeScale = 0f;
+        gameOver.SetActive(true);
+    }
 
 
 
