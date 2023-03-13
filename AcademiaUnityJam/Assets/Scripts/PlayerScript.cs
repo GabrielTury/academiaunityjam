@@ -173,6 +173,7 @@ public class PlayerScript : MonoBehaviour
 
             print("ataque 2 humano");
         }
+<<<<<<< Updated upstream
         else if (!human && lastAttackWolf2 > attackWolf2Cooldown)
         {
 
@@ -182,9 +183,18 @@ public class PlayerScript : MonoBehaviour
 
             print("ataque 1 lobo");
         }
+=======
+        /*else if (!human && canAttackWolf2 && !isAttacking)
+        {
+
+            DoDamage(attackPoint2, attackRange, 4);
+            canAttackWolf2= false;
+            isAttacking = true;
+        }*/
+>>>>>>> Stashed changes
 
     }
-    
+
     private void Attack1(InputAction.CallbackContext obj)
     {
         print(lastAttack1);
@@ -197,12 +207,44 @@ public class PlayerScript : MonoBehaviour
 
             print("ataque 1 humano");
         }
+<<<<<<< Updated upstream
         else if(!human && lastAttackWolf > attackWolfCooldown)
         {
 
             DoDamage(attackPoint1, attackRange, 4);
 
             lastAttackWolf = 0f;
+=======
+        else if (!human && canAttackWolf1 && !isAttacking)
+        {
+
+            DoDamage(attackPoint1, attackRange, 4);
+            canAttackWolf1 = false;
+            isAttacking = true;
+        }
+    }
+    //COLOCAR RESET NO LOBO
+    public void ResetAttack(string whichAttack)
+    {
+        isAttacking = false;
+        switch(whichAttack)
+        {
+            case "Attack1":
+                canAttack1 = true;
+                break;
+            case "Attack2":
+                canAttack2 = true;
+                break;
+            case "Attack3":
+                canAttack3 = true;
+                break;
+            case "WolfAttack1":
+                canAttackWolf1= true;
+                break;
+            case "WolfAttack2":
+                canAttackWolf2= true;
+                break;
+>>>>>>> Stashed changes
 
             print("ataque 1 lobo");
         }
@@ -281,6 +323,11 @@ public class PlayerScript : MonoBehaviour
         {
             acceleration = initialAcceleration;
         }
+        /*if (IsGrounded())
+        {
+
+        }*/
+
     }
 
     private void Break()
