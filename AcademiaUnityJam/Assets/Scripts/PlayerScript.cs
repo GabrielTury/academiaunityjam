@@ -9,7 +9,12 @@ public class PlayerScript : MonoBehaviour
     public PlayerManager playerManager;
     public DialogueManager dialogueManager;
     private Animator anima;
-    
+    public AudioSource slash1;
+    public AudioSource slash2;
+    public AudioSource slash3;
+    public AudioSource slashLobo;
+    public AudioSource walking;
+
 
     float playerDirection;
     Vector2 scale;
@@ -167,6 +172,7 @@ public class PlayerScript : MonoBehaviour
             canAttack3= false;
             isAttacking = true;
             anima.SetTrigger("Attack3");
+            slash1.Play();
 
         }
     }
@@ -178,6 +184,7 @@ public class PlayerScript : MonoBehaviour
             canAttack2= false;
             isAttacking = true;
             anima.SetTrigger("Attack2");
+            slash2.Play();
         }
         else if (!human && canAttackWolf2 && !isAttacking)
         {
@@ -185,6 +192,7 @@ public class PlayerScript : MonoBehaviour
             DoDamage(attackPoint2, attackRange, 4);
             canAttackWolf2= false;
             isAttacking = true;
+            slashLobo.Play();
         }
 
     }
@@ -198,6 +206,7 @@ public class PlayerScript : MonoBehaviour
             canAttack1 = false;
             isAttacking = true;
             anima.SetTrigger("Attack1");
+            slash3.Play();
         }
         else if(!human && canAttackWolf1 && !isAttacking)
         {
@@ -293,6 +302,11 @@ public class PlayerScript : MonoBehaviour
         if (Mathf.Sign(playerDirection) != Mathf.Sign(scale.x) && playerDirection != 0f)
         {
             ChangeDirection();
+            walking.Play();
+        }
+        else
+        {
+            walking.Stop();
         }
 
         //Limita a velocidade do personagem

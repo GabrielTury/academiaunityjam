@@ -12,7 +12,7 @@ public class BasicEnemy : EnemyManager
 
     private Rigidbody2D rdbd;
 
-
+    public AudioSource whip;
 
     private bool isAttacking = false;
 
@@ -65,6 +65,7 @@ public class BasicEnemy : EnemyManager
                 rdbd.velocity = Vector2.zero;
                 print(playerHit.name);
                 anima.SetTrigger("Attack");
+                whip.Play();
                 //StartCoroutine(Attack(playerHit));
                 isAttacking = true;
                 playerHit = null;
