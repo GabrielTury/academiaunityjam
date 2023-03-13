@@ -7,6 +7,7 @@ TagManager:
   - ground
   - Ranged
   - Melee
+  - Boss
   layers:
   - Default
   - TransparentFX

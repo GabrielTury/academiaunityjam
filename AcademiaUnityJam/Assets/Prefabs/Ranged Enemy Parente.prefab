@@ -460,6 +460,10 @@ PrefabInstance:
       propertyPath: m_FlipX
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4418455152494277905, guid: e5a31ccf78bf46249a3300509f3559ee, type: 3}
+      propertyPath: m_SortingOrder
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 4418455152494277909, guid: e5a31ccf78bf46249a3300509f3559ee, type: 3}
       propertyPath: m_Name
       value: Ranged Enemy

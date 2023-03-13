@@ -382,6 +382,10 @@ PrefabInstance:
       propertyPath: m_FlipX
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6809289346292085738, guid: 1b86cfbea573d7c43833108c83a38e64, type: 3}
+      propertyPath: m_SortingOrder
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 6809289346292085739, guid: 1b86cfbea573d7c43833108c83a38e64, type: 3}
       propertyPath: m_AngularDrag
       value: 0

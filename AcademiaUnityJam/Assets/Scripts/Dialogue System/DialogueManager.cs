@@ -69,6 +69,6 @@ public class DialogueManager : MonoBehaviour
     }
     public void ResumePlayer(PlayerScript playableCharacter)
     {
-        playableCharacter.maxSpeed = playableCharacter.GetMaxSpeed0;
+
     }
 }

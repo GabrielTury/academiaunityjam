@@ -1,32 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
-public class RangedEnemy : EnemyManager
+public class Boss_Script : EnemyManager
 {
-    [SerializeField] private Transform patrolPoint1, patrolPoint2;
+    #region Variables
+    [Header ("Range Stats")]
+    [SerializeField] private float meleeAttackRange;
+    [SerializeField] Transform rangedAttackRange, attackPointRanged, attackPointMelee,patrolPoint1,patrolPoint2;
+    Rigidbody2D rdbd;
+    bool isAttacking;
+    public LayerMask playerLayer;
 
-    [SerializeField] private Transform attackPoint;
-    [SerializeField] private Transform attackRange;
-    [SerializeField] private LayerMask playerLayer;
-
-    private Rigidbody2D rdbd;
+    float timer;
+    
+    public AudioSource mosketeerTiro;
 
     [SerializeField] private GameObject bullet;
 
-
-    private bool isAttacking = false;
-
-    public AudioSource mosketeerTiro;
+    #endregion
 
 
-    // Start is called before the first frame update
+
+
+
     void Start()
     {
         playerManager = FindObjectOfType<PlayerManager>();
         playerScript = FindObjectOfType<PlayerScript>();
         rdbd= GetComponent<Rigidbody2D>();
-
         anima = GetComponent<Animator>();
 
         currentHealth = maxHealth;
@@ -38,76 +41,54 @@ public class RangedEnemy : EnemyManager
     private void FixedUpdate()
     {
         if (!isAttacking)
-        rdbd.velocity = new Vector2(speed, rdbd.velocity.y);
+            rdbd.velocity = new Vector2(speed, rdbd.velocity.y);
     }
-
-    private void Update()
+    void Update()
     {
 
-        
+        anima.SetFloat("Velocity", rdbd.velocity.x);
 
-
-            
-
-        
-
-        if (!isAttacking)
+        if (!isAttacking && currentHealth > 100)
         {
-            Collider2D playerHit = Physics2D.OverlapArea(transform.position, attackRange.position, playerLayer);
             Patrol(patrolPoint1, patrolPoint2);
+            Collider2D playerHit = Physics2D.OverlapArea(transform.position, rangedAttackRange.position, playerLayer);
 
 
             if (playerHit != null)
             {
-                anima.SetTrigger("Attack");
+                anima.SetTrigger("AttackRanged");
                 mosketeerTiro.Play();
                 isAttacking = true;
                 playerHit = null;
             }
         }
-    }
-
-    #region Doing Damage
-    public void Attack(/*Collider2D playerHit*/)
-    {
-        Instantiate(bullet, attackPoint.position, attackPoint.rotation);
-
-        //yield return new WaitForSeconds(3);
-        ResumePatrol();
-    }
-
-    /*private void CheckAttack()
-    {
-        Collider2D playerHit = Physics2D.OverlapArea(transform.position, attackRange.position, playerLayer);
-
-        if (playerHit != null)
+        else if(currentHealth <= 100 && !isAttacking)
         {
-            anima.SetTrigger("Attack");
-            playerHit = null;
+            Collider2D playerHit = Physics2D.OverlapCircle(attackPointMelee.position, meleeAttackRange, playerLayer);
+            Patrol(patrolPoint1, patrolPoint2);
+
+            if (playerHit != null)
+            {
+
+                rdbd.velocity = Vector2.zero;
+                print(playerHit.name);
+                anima.SetTrigger("AttackMelee");
+                //StartCoroutine(Attack(playerHit));
+                isAttacking = true;
+                playerHit = null;
+            }
+            
         }
-        else
+        else if (currentHealth<= 100)  
         {
-            ResumePatrol();
+            isAttacking = false;
         }
-    }*/
-
-    private void ResumePatrol()
-    {
-        isAttacking = false;
-    }
-
-    #endregion
-
-    #region Aura Creation
-
-
-    private void AuraVisual(int auraColor)
-    {
 
     }
-    #endregion
 
-    #region Taking Damage
+
+
+    #region Take Damage
     public void TakeDamageShield(int damageColor)
     {
         //Animação de tomar dano
@@ -163,22 +144,46 @@ public class RangedEnemy : EnemyManager
 
     private void Die()
     {
-        //animação de morrer
 
 
-        //recarrega a barra de Lobo
-        playerManager.FillWolfBar();
+        //Tocar os créditos
 
         //Trocar destroy por pull
         Destroy(gameObject);
     }
     #endregion
+
+
+    #region Attacks
+
+
+
+
+    public void Attack()
+    {
+        Instantiate(bullet, attackPointRanged.position, attackPointRanged.rotation);
+        isAttacking = false;
+    }
+
+    public void AttackMelee()
+    {
+        playerScript.TakeDamage(10);
+    }
+
+    #endregion
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.blue;
-        Gizmos.DrawLine(transform.position, attackRange.position);
+        Gizmos.DrawLine(transform.position, rangedAttackRange.position);
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(currentWaypoint, patrolPointRange);
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(attackPointMelee.position, meleeAttackRange);
     }
 
+
+
+
 }
+

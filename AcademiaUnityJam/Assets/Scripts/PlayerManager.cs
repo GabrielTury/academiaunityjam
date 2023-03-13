@@ -9,7 +9,7 @@ public class PlayerManager : MonoBehaviour
 
     public Image wolfFill;
     public Image healthFill;
-    public GameObject wolfReady, wolfAttack1, wolfAttack2, attackGreen;
+    public GameObject wolfReady, wolfAttack1, attackGreen;
     public GameObject gameOver;
 
     public PlayerScript playerScript;
@@ -45,7 +45,7 @@ public class PlayerManager : MonoBehaviour
         start= true;
         wolfReady.SetActive(true);
         wolfAttack1.SetActive(true);
-        wolfAttack2.SetActive(true);
+        
         attackGreen.SetActive(false);
     }
     // Update is called once per frame
@@ -65,7 +65,6 @@ public class PlayerManager : MonoBehaviour
             start = false;
             wolfReady.SetActive(false);
             wolfAttack1.SetActive(false);
-            wolfAttack2.SetActive(false);
             attackGreen.SetActive(true);
         }
     }

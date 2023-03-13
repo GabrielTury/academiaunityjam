@@ -14,7 +14,7 @@ public class PlayerScript : MonoBehaviour
     public AudioSource slash3;
     public AudioSource slashLobo;
     public AudioSource walking;
-
+    bool maxJump;
 
     float playerDirection;
     Vector2 scale;
@@ -81,7 +81,7 @@ public class PlayerScript : MonoBehaviour
 
     #region Components
     private Rigidbody2D playerRbd;
-    private Controls playerInputs;
+    internal Controls playerInputs;
     #endregion
 
 
@@ -136,17 +136,31 @@ public class PlayerScript : MonoBehaviour
     #region Updates
     private void FixedUpdate()
     {
-
+       // print(playerRbd.velocity.y);
         playerDirection = playerInputs.Player.Movement.ReadValue<float>();
 
         if(playerDirection!=0)
             Run();
         else
             Break();
-        
+
+        if (playerRbd.velocity.y <= 3 && !IsGrounded() && !maxJump)
+        {
+            maxJump = true;
+            playerRbd.gravityScale = 5f;
+            playerRbd.velocity = new Vector2(playerRbd.velocity.x, 0);
+        }
+        else if (IsGrounded())
+        {
+            playerRbd.gravityScale = 1f;
+            maxJump = false;
+        }
+
     }
     void Update()
     {
+
+        anima.SetBool("Human", human);
 
         anima.SetFloat("Velocity", Mathf.Abs(playerRbd.velocity.x));
         anima.SetFloat("VelocityY",Mathf.Abs(playerRbd.velocity.y));
@@ -186,14 +200,14 @@ public class PlayerScript : MonoBehaviour
             anima.SetTrigger("Attack2");
             slash2.Play();
         }
-        else if (!human && canAttackWolf2 && !isAttacking)
+        /*else if (!human && canAttackWolf2 && !isAttacking)
         {
 
             DoDamage(attackPoint2, attackRange, 4);
             canAttackWolf2= false;
             isAttacking = true;
             slashLobo.Play();
-        }
+        }*/
 
     }
     
@@ -214,7 +228,7 @@ public class PlayerScript : MonoBehaviour
             DoDamage(attackPoint1, attackRange, 4);
             canAttackWolf1= false;
             isAttacking = true;
-
+            anima.SetTrigger("AttackWolf1");
             
         }
     }
@@ -236,9 +250,9 @@ public class PlayerScript : MonoBehaviour
             case "WolfAttack1":
                 canAttackWolf1= true;
                 break;
-            case "WolfAttack2":
+/*            case "WolfAttack2":
                 canAttackWolf2= true;
-                break;
+                break;*/
 
         }
     }
@@ -250,10 +264,12 @@ public class PlayerScript : MonoBehaviour
 
         foreach (Collider2D enemy in enemiesHit)
         {
-            if(enemy.CompareTag("Melee"))
-            enemy.GetComponent<BasicEnemy>().TakeDamageShield(damageColor);
+            if (enemy.CompareTag("Melee"))
+                enemy.GetComponent<BasicEnemy>().TakeDamageShield(damageColor);
             else if (enemy.CompareTag("Ranged"))
-            enemy.GetComponent<RangedEnemy>().TakeDamageShield(damageColor);
+                enemy.GetComponent<RangedEnemy>().TakeDamageShield(damageColor);
+            else if (enemy.CompareTag("Boss"))
+                enemy.GetComponent<Boss_Script>().TakeDamageShield(damageColor);
         }
     }
 
@@ -357,25 +373,15 @@ public class PlayerScript : MonoBehaviour
                 //playerInputs.Player.Disable();
                 //playerInputs.Lobo.Enable();
                 human= false;
-                maxSpeed += 3f;
-                jumpForce -= 3f;
+                isAttacking = false;
 
                 playerManager.ResetWolfBar(10);
                 playerManager.FillHealthBar();
                 currentHealth = maxHealth;
+                attackRange = 4f;
 
-                print("Virou lobo");
-            }
-            //troca de lobo para humano
-            //else
-            //{
-            //    //playerInputs.Player.Enable();
-            //    //playerInputs.Lobo.Disable();
-            //    human= true;
-            //    maxSpeed -= 3f;
-            //    jumpForce += 3f;
-            //    print("Virou Humano");
-            //}                   
+
+            }                 
             
         }
     }
@@ -383,9 +389,8 @@ public class PlayerScript : MonoBehaviour
     public void UnMorph()
     {
         human = true;
-        maxSpeed -= 3f;
-        jumpForce += 3f;
-        print("Virou Humano");
+        isAttacking = false;
+        attackRange = 1.6f;
     }
 
     #endregion

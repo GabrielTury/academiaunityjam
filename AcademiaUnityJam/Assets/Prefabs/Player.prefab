@@ -172,7 +172,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 10
+  m_SortingOrder: 15
   m_Sprite: {fileID: 4922877698566373427, guid: 17dd4b6a5faee43419fc7a1159653ea2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -252,7 +252,7 @@ MonoBehaviour:
   walking: {fileID: 98550737}
   acceleration: 10
   maxSpeed: 5
-  attackRange: 1.31
+  attackRange: 1.52
   attackPoint1: {fileID: 1463421555}
   attackPoint2: {fileID: 1463421555}
   attackPoint3: {fileID: 1167892137}
