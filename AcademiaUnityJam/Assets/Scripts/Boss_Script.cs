@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Boss_Script : EnemyManager
 {
@@ -48,7 +49,7 @@ public class Boss_Script : EnemyManager
 
         anima.SetFloat("Velocity", rdbd.velocity.x);
 
-        if (!isAttacking && currentHealth > 100)
+        if (!isAttacking && currentHealth > 150)
         {
             Patrol(patrolPoint1, patrolPoint2);
             Collider2D playerHit = Physics2D.OverlapArea(transform.position, rangedAttackRange.position, playerLayer);
@@ -62,7 +63,7 @@ public class Boss_Script : EnemyManager
                 playerHit = null;
             }
         }
-        else if(currentHealth <= 100 && !isAttacking)
+        else if(currentHealth <= 150 && !isAttacking)
         {
             Collider2D playerHit = Physics2D.OverlapCircle(attackPointMelee.position, meleeAttackRange, playerLayer);
             Patrol(patrolPoint1, patrolPoint2);
@@ -147,7 +148,7 @@ public class Boss_Script : EnemyManager
 
 
         //Tocar os créditos
-
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         //Trocar destroy por pull
         Destroy(gameObject);
     }

@@ -28,7 +28,7 @@ public class PlayerManager : MonoBehaviour
 
     public void FillWolfBar()
     {
-        wolfFill.fillAmount += 0.2f;
+        wolfFill.fillAmount += 0.34f;
     }
 
     public void GameOver()

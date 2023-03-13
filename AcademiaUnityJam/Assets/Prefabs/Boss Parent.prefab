@@ -431,7 +431,7 @@ MonoBehaviour:
   auraVisualGreen: {fileID: 7848810399469633335}
   auraVisualYellow: {fileID: 7848810398511449256}
   auraVisualPink: {fileID: 7848810400333452157}
-  maxHealth: 200
+  maxHealth: 300
   speed: 3
   patrolPointRange: 1
   meleeAttackRange: 1.24

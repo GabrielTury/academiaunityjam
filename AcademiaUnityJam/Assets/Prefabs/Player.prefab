@@ -250,8 +250,8 @@ MonoBehaviour:
   slash3: {fileID: 98550735}
   slashLobo: {fileID: 98550736}
   walking: {fileID: 98550737}
-  acceleration: 10
-  maxSpeed: 5
+  acceleration: 50
+  maxSpeed: 8
   attackRange: 1.52
   attackPoint1: {fileID: 1463421555}
   attackPoint2: {fileID: 1463421555}
