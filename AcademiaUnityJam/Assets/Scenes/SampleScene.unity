@@ -3639,7 +3639,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.803845, y: 1.9750454, z: -10}
+  m_LocalPosition: {x: -11.088191, y: 1.9577203, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -7980,7 +7980,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6191692432174395764, guid: bbc219b3e27f3ab4197d86a5c6d94108, type: 3}
       propertyPath: dialogue.sentences.Array.data[0]
-      value: TESTANDO
+      value: 'Um mosqueteiro!?
+
+        Droga, tenho que tomar cuidado.'
       objectReference: {fileID: 0}
     - target: {fileID: 6191692432174395764, guid: bbc219b3e27f3ab4197d86a5c6d94108, type: 3}
       propertyPath: dialogue.sentences.Array.data[1]
@@ -8024,7 +8026,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6191692432174395767, guid: bbc219b3e27f3ab4197d86a5c6d94108, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.54
+      value: 24.45
       objectReference: {fileID: 0}
     - target: {fileID: 6191692432174395767, guid: bbc219b3e27f3ab4197d86a5c6d94108, type: 3}
       propertyPath: m_LocalPosition.y
@@ -8072,6 +8074,113 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 6191692432174395767, guid: bbc219b3e27f3ab4197d86a5c6d94108, type: 3}
   m_PrefabInstance: {fileID: 1146000638}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1148072968
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1626362169}
+    m_Modifications:
+    - target: {fileID: 6191692432174395764, guid: bbc219b3e27f3ab4197d86a5c6d94108, type: 3}
+      propertyPath: dialogue.sentences.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6191692432174395764, guid: bbc219b3e27f3ab4197d86a5c6d94108, type: 3}
+      propertyPath: dialogue.sentences.Array.data[0]
+      value: Sai da lavoura finalmente.
+      objectReference: {fileID: 0}
+    - target: {fileID: 6191692432174395764, guid: bbc219b3e27f3ab4197d86a5c6d94108, type: 3}
+      propertyPath: dialogue.sentences.Array.data[1]
+      value: "Aquele desgra\xE7ado deve estar por perto.\nEle vai pagar pelo que
+        fez."
+      objectReference: {fileID: 0}
+    - target: {fileID: 6191692432174395764, guid: bbc219b3e27f3ab4197d86a5c6d94108, type: 3}
+      propertyPath: dialogue.sentences.Array.data[2]
+      value: Isso eh um teste
+      objectReference: {fileID: 0}
+    - target: {fileID: 6191692432174395764, guid: bbc219b3e27f3ab4197d86a5c6d94108, type: 3}
+      propertyPath: dialogue.sentences.Array.data[3]
+      value: Isso eh um teste
+      objectReference: {fileID: 0}
+    - target: {fileID: 6191692432174395764, guid: bbc219b3e27f3ab4197d86a5c6d94108, type: 3}
+      propertyPath: dialogue.sentences.Array.data[4]
+      value: Isso eh um teste
+      objectReference: {fileID: 0}
+    - target: {fileID: 6191692432174395764, guid: bbc219b3e27f3ab4197d86a5c6d94108, type: 3}
+      propertyPath: dialogue.sentences.Array.data[5]
+      value: Isso eh um teste
+      objectReference: {fileID: 0}
+    - target: {fileID: 6191692432174395764, guid: bbc219b3e27f3ab4197d86a5c6d94108, type: 3}
+      propertyPath: dialogue.sentences.Array.data[6]
+      value: Isso eh um teste
+      objectReference: {fileID: 0}
+    - target: {fileID: 6191692432174395764, guid: bbc219b3e27f3ab4197d86a5c6d94108, type: 3}
+      propertyPath: dialogue.sentences.Array.data[7]
+      value: Isso eh um teste
+      objectReference: {fileID: 0}
+    - target: {fileID: 6191692432174395764, guid: bbc219b3e27f3ab4197d86a5c6d94108, type: 3}
+      propertyPath: dialogue.sentences.Array.data[8]
+      value: Isso eh um teste
+      objectReference: {fileID: 0}
+    - target: {fileID: 6191692432174395764, guid: bbc219b3e27f3ab4197d86a5c6d94108, type: 3}
+      propertyPath: dialogue.sentences.Array.data[9]
+      value: Isso eh um teste
+      objectReference: {fileID: 0}
+    - target: {fileID: 6191692432174395767, guid: bbc219b3e27f3ab4197d86a5c6d94108, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6191692432174395767, guid: bbc219b3e27f3ab4197d86a5c6d94108, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 84.72
+      objectReference: {fileID: 0}
+    - target: {fileID: 6191692432174395767, guid: bbc219b3e27f3ab4197d86a5c6d94108, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.1801817
+      objectReference: {fileID: 0}
+    - target: {fileID: 6191692432174395767, guid: bbc219b3e27f3ab4197d86a5c6d94108, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.640564
+      objectReference: {fileID: 0}
+    - target: {fileID: 6191692432174395767, guid: bbc219b3e27f3ab4197d86a5c6d94108, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6191692432174395767, guid: bbc219b3e27f3ab4197d86a5c6d94108, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6191692432174395767, guid: bbc219b3e27f3ab4197d86a5c6d94108, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6191692432174395767, guid: bbc219b3e27f3ab4197d86a5c6d94108, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6191692432174395767, guid: bbc219b3e27f3ab4197d86a5c6d94108, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6191692432174395767, guid: bbc219b3e27f3ab4197d86a5c6d94108, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6191692432174395767, guid: bbc219b3e27f3ab4197d86a5c6d94108, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6191692432174395770, guid: bbc219b3e27f3ab4197d86a5c6d94108, type: 3}
+      propertyPath: m_Name
+      value: Dialogue trigger (2)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: bbc219b3e27f3ab4197d86a5c6d94108, type: 3}
+--- !u!4 &1148072969 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6191692432174395767, guid: bbc219b3e27f3ab4197d86a5c6d94108, type: 3}
+  m_PrefabInstance: {fileID: 1148072968}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1165427121
 GameObject:
@@ -10744,6 +10853,7 @@ Transform:
   m_Children:
   - {fileID: 1141429027}
   - {fileID: 1146000639}
+  - {fileID: 1148072969}
   m_Father: {fileID: 0}
   m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -13922,7 +14032,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6191692432174395764, guid: bbc219b3e27f3ab4197d86a5c6d94108, type: 3}
       propertyPath: dialogue.sentences.Array.data[0]
-      value: Ola castanha
+      value: "Um colono \xE0 frente.\nTenho que tomar cuidado com seu chicote"
       objectReference: {fileID: 0}
     - target: {fileID: 6191692432174395764, guid: bbc219b3e27f3ab4197d86a5c6d94108, type: 3}
       propertyPath: dialogue.sentences.Array.data[1]
@@ -13966,7 +14076,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6191692432174395767, guid: bbc219b3e27f3ab4197d86a5c6d94108, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.993248
+      value: 8.86
       objectReference: {fileID: 0}
     - target: {fileID: 6191692432174395767, guid: bbc219b3e27f3ab4197d86a5c6d94108, type: 3}
       propertyPath: m_LocalPosition.y
