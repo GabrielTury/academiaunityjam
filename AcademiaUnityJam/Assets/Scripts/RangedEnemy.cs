@@ -17,6 +17,8 @@ public class RangedEnemy : EnemyManager
 
     private bool isAttacking = false;
 
+    public AudioSource mosketeerTiro;
+
 
     // Start is called before the first frame update
     void Start()
@@ -58,6 +60,7 @@ public class RangedEnemy : EnemyManager
             if (playerHit != null)
             {
                 anima.SetTrigger("Attack");
+                mosketeerTiro.Play();
                 //StartCoroutine(Attack(playerHit));
                 isAttacking = true;
                 playerHit = null;
