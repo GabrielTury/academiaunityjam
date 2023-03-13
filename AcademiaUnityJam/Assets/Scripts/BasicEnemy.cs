@@ -101,15 +101,6 @@ public class BasicEnemy : EnemyManager
     }
     #endregion
 
-    #region Aura Creation
-
-
-    private void AuraVisual(int auraColor)
-    {
-
-    }
-    #endregion
-
     #region Taking Damage
     public void TakeDamageShield(int damageColor)
     {
@@ -127,20 +118,20 @@ public class BasicEnemy : EnemyManager
 
             //Destrói a aura
 
-
+            AuraDestroy(auraShield1);
             //Toma o dano
             auraShield1 = -1;
 
         }
         else if(auraShield2 == damageColor)
         {
-
+            AuraDestroy(auraShield2);
             auraShield2 = -1;
 
         }
         else if(auraShield3 == damageColor)
         {
-
+            AuraDestroy(auraShield3);
             auraShield3 = -1;
 
         }else if (damageColor == 4)

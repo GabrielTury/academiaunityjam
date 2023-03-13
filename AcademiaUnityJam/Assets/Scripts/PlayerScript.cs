@@ -214,6 +214,8 @@ public class PlayerScript : MonoBehaviour
             DoDamage(attackPoint1, attackRange, 4);
             canAttackWolf1= false;
             isAttacking = true;
+
+            
         }
     }
 

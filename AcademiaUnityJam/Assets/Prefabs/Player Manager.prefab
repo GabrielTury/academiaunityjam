@@ -48,4 +48,6 @@ MonoBehaviour:
   wolfReady: {fileID: 0}
   wolfAttack1: {fileID: 0}
   wolfAttack2: {fileID: 0}
+  attackGreen: {fileID: 0}
+  gameOver: {fileID: 0}
   playerScript: {fileID: 0}

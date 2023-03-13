@@ -125,20 +125,20 @@ public class RangedEnemy : EnemyManager
 
             //Destrói a aura
 
-
+            AuraDestroy(auraShield1);
             //Toma o dano
             auraShield1 = -1;
 
         }
         else if (auraShield2 == damageColor)
         {
-
+            AuraDestroy(auraShield2);
             auraShield2 = -1;
 
         }
         else if (auraShield3 == damageColor)
         {
-
+            AuraDestroy(auraShield3);
             auraShield3 = -1;
 
         }

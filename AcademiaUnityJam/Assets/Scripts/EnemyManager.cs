@@ -6,7 +6,7 @@ using UnityEngine;
 public class EnemyManager : MonoBehaviour
 {
 
-    
+    [SerializeField] protected GameObject auraVisualGreen, auraVisualYellow, auraVisualPink;
 
     protected Animator anima;
     protected PlayerScript playerScript;
@@ -25,6 +25,7 @@ public class EnemyManager : MonoBehaviour
 
     {
         auraShield1 = auraColor;
+        AuraVisual(auraShield1);
 
         if (manyAuras >= 1)
         {
@@ -32,7 +33,7 @@ public class EnemyManager : MonoBehaviour
             {
 
                 auraShield2 = Random.Range(0, 3);
-
+                AuraVisual(auraShield2);
             }
             while (auraShield2 == auraShield1);
 
@@ -45,6 +46,7 @@ public class EnemyManager : MonoBehaviour
             do
             {
                 auraShield3 = Random.Range(0, 3);
+                AuraVisual(auraShield3);
 
             }
             while (auraShield3 == auraShield1 || auraShield3 == auraShield1);
@@ -60,6 +62,38 @@ public class EnemyManager : MonoBehaviour
 
 
         //print(auraShield1 + auraShield2 + auraShield3); 
+    }
+
+    private void AuraVisual(int auraShield)
+    {
+        switch (auraShield)
+        {
+            case 0:
+                auraVisualPink.SetActive(true);
+                break;
+            case 1:
+                auraVisualGreen.SetActive(true);
+                break;
+            case 2:
+                auraVisualYellow.SetActive(true);
+                break;
+        }
+    }
+
+    protected void AuraDestroy(int auraShield)
+    {
+        switch (auraShield)
+        {
+            case 0:
+                auraVisualPink.SetActive(false);
+                break;
+            case 1:
+                auraVisualGreen.SetActive(false);
+                break;
+            case 2:
+                auraVisualYellow.SetActive(false);
+                break;
+        }
     }
     #endregion
 
